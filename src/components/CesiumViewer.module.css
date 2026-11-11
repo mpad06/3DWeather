@@ -1,0 +1,18 @@
+/* The Cesium canvas fills the element that contains this component. */
+.viewer,
+.unavailable {
+  position: absolute;
+  inset: 0;
+}
+
+.viewer {
+  /* Shown until the first map tiles are drawn */
+  background: #000;
+}
+
+.unavailable {
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: radial-gradient(circle at 50% 30%, var(--color-surface), var(--color-bg));
+}

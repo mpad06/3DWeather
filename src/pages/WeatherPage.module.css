@@ -1,0 +1,50 @@
+/* The page fills the viewport: the 3D scene takes all remaining space. */
+.page {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  min-height: 0;
+}
+
+/* Layer above the canvas. Clicks pass through to the globe except on controls. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  pointer-events: none;
+}
+
+.overlay > * {
+  pointer-events: auto;
+}
+
+.back,
+.notice {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-glass);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.notice {
+  font-size: var(--font-size-s);
+  color: var(--color-warning);
+}
