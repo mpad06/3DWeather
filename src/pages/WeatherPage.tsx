@@ -1,20 +1,23 @@
-import { useCallback, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { CesiumViewer } from '../components/CesiumViewer'
+import { useSearchParams } from 'react-router-dom'
 import { ErrorMessage } from '../components/ErrorMessage'
+import { ForecastView } from '../components/ForecastView'
 import { FullPageMessage } from '../components/FullPageMessage'
-import { ionToken } from '../scene/ionToken'
+import { Spinner } from '../components/Spinner'
+import { useWeather } from '../hooks/useWeather'
 import { readLocation } from '../utils/location'
-import styles from './WeatherPage.module.css'
 
-/** Weather view. Phase 2: shows the 3D scene of the location from the URL. */
+/**
+ * Weather page (/weather). Its job is the data flow up to the forecast:
+ * URL search params → location → useWeather → one of four screens.
+ */
 export default function WeatherPage() {
+  // The location lives in the URL, so the page can be reloaded and shared.
   const [searchParams] = useSearchParams()
   const location = readLocation(searchParams)
 
-  const [ionFailed, setIonFailed] = useState(false)
-  // Stable function identity, see the onIonError prop of CesiumViewer
-  const handleIonError = useCallback(() => setIonFailed(true), [])
+  // Hooks must be called on every render, also without a valid location.
+  // With null the hook stays 'idle' and sends no request.
+  const weather = useWeather(location?.lat ?? null, location?.lon ?? null)
 
   if (!location) {
     return (
@@ -28,37 +31,35 @@ export default function WeatherPage() {
     )
   }
 
-  return (
-    <main className={styles.page}>
-      <div className={styles.scene}>
-        <CesiumViewer
-          lat={location.lat}
-          lon={location.lon}
-          elevation={0}
-          onIonError={handleIonError}
+  if (weather.status === 'error') {
+    return (
+      <FullPageMessage>
+        <ErrorMessage
+          title="Vorhersage konnte nicht geladen werden"
+          message={weather.error}
+          actionLabel="Erneut versuchen"
+          onAction={weather.retry}
+          showHomeLink
         />
-        <div className={styles.overlay}>
-          <Link to="/" className={styles.back}>
-            ← Ort ändern
-          </Link>
-          <p className={styles.notice}>
-            {location.name} · {location.detail}
-          </p>
-          {!location.inCoverageArea && (
-            <p className={styles.notice}>
-              Diese App ist für Deutschland ausgelegt – außerhalb kann die Vorhersage ungenauer sein.
-            </p>
-          )}
-          {!ionToken && (
-            <p className={styles.notice}>
-              3D-Gelände nicht verfügbar – kein Cesium-Token konfiguriert
-            </p>
-          )}
-          {ionFailed && (
-            <p className={styles.notice}>3D-Gelände nicht verfügbar – Cesium-Token ungültig</p>
-          )}
-        </div>
-      </div>
-    </main>
+      </FullPageMessage>
+    )
+  }
+
+  if (weather.status !== 'success') {
+    return (
+      <FullPageMessage>
+        <Spinner label={`Vorhersage für ${location.name} wird geladen …`} />
+      </FullPageMessage>
+    )
+  }
+
+  // The key creates a fresh ForecastView for every location, which resets
+  // its state (selected hour, playback) when the user switches the place.
+  return (
+    <ForecastView
+      key={`${location.lat},${location.lon}`}
+      location={location}
+      forecast={weather.data}
+    />
   )
 }

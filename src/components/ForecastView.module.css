@@ -1,0 +1,106 @@
+/*
+ * The view fills the viewport exactly: the 3D scene takes all space that the
+ * bottom panel (timeline) leaves. "svh" is the small viewport height, so the
+ * layout also fits when a mobile browser shows its address bar.
+ */
+.page {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  min-height: 0;
+}
+
+/*
+ * Layer above the canvas. It ignores the pointer so the globe below can
+ * still be dragged; only the controls inside react to clicks and touches.
+ */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  pointer-events: none;
+}
+
+.overlay > * {
+  pointer-events: auto;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+
+.back,
+.place {
+  background: var(--color-glass);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+}
+
+.back {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.back:hover {
+  border-color: var(--color-accent);
+}
+
+.place {
+  min-width: 0;
+  padding: var(--space-1) var(--space-4);
+}
+
+.placeName {
+  font-size: var(--font-size-m);
+}
+
+.placeDetail {
+  overflow: hidden;
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  /* Keep clear of the home indicator on phones without a home button */
+  padding-bottom: max(var(--space-2), env(safe-area-inset-bottom));
+  text-align: center;
+  background: var(--color-bg-raised);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (min-width: 48rem) {
+  .overlay {
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .panel {
+    padding: var(--space-3) var(--space-5);
+  }
+}

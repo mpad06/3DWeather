@@ -1,0 +1,7 @@
+.arrow {
+  width: 1rem;
+  height: 1rem;
+  margin-right: var(--space-2);
+  vertical-align: -0.125em;
+  fill: var(--color-accent);
+}

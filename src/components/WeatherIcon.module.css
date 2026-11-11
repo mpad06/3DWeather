@@ -1,0 +1,41 @@
+.icon {
+  flex-shrink: 0;
+  /* Rounded line ends for rays, drops and fog lines */
+  stroke-linecap: round;
+}
+
+.sun {
+  fill: var(--color-temperature);
+  stroke: var(--color-temperature);
+  stroke-width: 2.5;
+}
+
+.moon {
+  fill: #dfe6f5;
+}
+
+.cloud {
+  fill: #e6edf8;
+}
+
+.cloudDark {
+  fill: #9eabc2;
+}
+
+.drops {
+  stroke: var(--color-rain);
+  stroke-width: 2.5;
+}
+
+.flakes {
+  fill: #ffffff;
+}
+
+.bolt {
+  fill: #ffd84a;
+}
+
+.fog {
+  stroke: #c5cfe0;
+  stroke-width: 2.5;
+}
