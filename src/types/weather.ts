@@ -40,6 +40,12 @@ export type HourlyWeather = {
   windGusts: number
   /** true between sunrise and sunset */
   isDay: boolean
+  /**
+   * Daylight as a number: 1 by day, 0 at night. Between a day hour and a
+   * night hour the timeline blends the two values, which gives the 3D scene
+   * a gradual dusk and dawn.
+   */
+  daylight: number
   /** Height of the 0 °C level in m above sea level */
   freezingLevelHeight: number
   /** Convective available potential energy in J/kg (thunderstorm potential) */

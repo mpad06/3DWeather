@@ -133,6 +133,7 @@ function toForecast(data: OpenMeteoResponse): Forecast {
     windDirection: at(hourly.wind_direction_10m, i),
     windGusts: at(hourly.wind_gusts_10m, i),
     isDay: at(hourly.is_day, i) === 1,
+    daylight: at(hourly.is_day, i),
     freezingLevelHeight: at(hourly.freezing_level_height, i),
     cape: at(hourly.cape, i),
     sunshineDuration: at(hourly.sunshine_duration, i),

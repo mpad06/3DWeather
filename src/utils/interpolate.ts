@@ -42,6 +42,7 @@ const BLENDED_FIELDS = [
   'visibility',
   'windSpeed',
   'windGusts',
+  'daylight',
   'freezingLevelHeight',
   'cape',
   'sunshineDuration',
