@@ -122,3 +122,21 @@
     display: block;
   }
 }
+
+/* With a mouse the slider needs no finger-sized touch area */
+@media (hover: hover) and (pointer: fine) {
+  .slider {
+    height: 2rem;
+  }
+}
+
+/* Very low screens: keep only the controls, the slider and its labels */
+@media (max-height: 34rem) {
+  .overview {
+    display: none;
+  }
+
+  .timeline {
+    gap: 0;
+  }
+}

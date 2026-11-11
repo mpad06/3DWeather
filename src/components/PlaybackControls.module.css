@@ -1,7 +1,7 @@
 .controls {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .group {
@@ -68,4 +68,10 @@
 .active {
   color: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+@media (min-width: 48rem) {
+  .controls {
+    gap: var(--space-3);
+  }
 }

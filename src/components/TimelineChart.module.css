@@ -8,8 +8,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0 var(--space-4);
-  font-size: var(--font-size-s);
+  gap: 0 var(--space-3);
+  /* Small enough for both entries to share one line on a phone */
+  font-size: 0.6875rem;
   color: var(--color-text-muted);
   text-align: left;
 }
@@ -37,7 +38,7 @@
 
 .plot {
   position: relative;
-  height: 3.5rem;
+  height: 3rem;
 }
 
 .svg {
@@ -100,7 +101,21 @@
   pointer-events: none;
 }
 
+/* Small phones: the legend gives its space to the 3D scene */
+@media (max-width: 47.99rem) and (max-height: 40rem) {
+  .legend {
+    display: none;
+  }
+}
+
 @media (min-width: 48rem) {
+  .legend {
+    font-size: var(--font-size-s);
+  }
+}
+
+/* The taller chart is only used when the screen is wide and high enough */
+@media (min-width: 48rem) and (min-height: 46rem) {
   .plot {
     height: 4.5rem;
   }

@@ -4,6 +4,7 @@ import { HowItWorks } from '../components/HowItWorks'
 import { LocateButton } from '../components/LocateButton'
 import { PopularCities } from '../components/PopularCities'
 import { SearchBar } from '../components/SearchBar'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import type { Coordinates } from '../hooks/useGeolocation'
 import type { City } from '../types/city'
 import { weatherPathForCity, weatherPathForPosition } from '../utils/location'
@@ -15,6 +16,7 @@ import styles from './LandingPage.module.css'
  * URL of the weather page, which makes that page reloadable and shareable.
  */
 export default function LandingPage() {
+  useDocumentTitle('48-Stunden-Vorhersage in 3D')
   const navigate = useNavigate()
 
   function handleCitySelect(city: City) {

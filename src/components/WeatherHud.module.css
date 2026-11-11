@@ -81,12 +81,39 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Wide screens: fixed-width card, details always visible, no toggle button */
-@media (min-width: 48rem) {
+/*
+ * Wide and reasonably high screens: a card whose details are always visible
+ * (no toggle button). The details keep the two-column grid, which is flat
+ * enough for a laptop screen.
+ */
+@media (min-width: 48rem) and (min-height: 34rem) {
+  .hud {
+    width: 22rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-l);
+  }
+
+  .temperature {
+    font-size: 2.25rem;
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  .details,
+  .details.open {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1) var(--space-4);
+  }
+}
+
+/* Wide and high screens: the roomy version with one value per line */
+@media (min-width: 48rem) and (min-height: 46rem) {
   .hud {
     width: 19rem;
     padding: var(--space-4);
-    border-radius: var(--radius-l);
   }
 
   .main {
@@ -96,10 +123,6 @@
 
   .temperature {
     font-size: 2.5rem;
-  }
-
-  .toggle {
-    display: none;
   }
 
   .time {

@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { useTimelinePlayback } from '../hooks/useTimelinePlayback'
 import { ionToken } from '../scene/ionToken'
 import type { Forecast } from '../types/weather'
@@ -26,6 +27,7 @@ type ForecastViewProps = {
  * back through callbacks. So the data flows in one direction only.
  */
 export function ForecastView({ location, forecast }: ForecastViewProps) {
+  useDocumentTitle(location.name)
   const timeline = useTimelinePlayback(forecast.hours.length)
 
   // The weather at the selected position. It is derived, not stored: during

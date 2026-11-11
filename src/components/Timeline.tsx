@@ -77,8 +77,9 @@ export function Timeline({
       </div>
 
       <div className={styles.track}>
-        {/* Indented by half a thumb width, so hour positions match the slider thumb */}
-        <div className={styles.aligned}>
+        {/* Indented by half a thumb width, so hour positions match the slider thumb.
+            This overview is hidden on very low screens (phone held sideways). */}
+        <div className={`${styles.aligned} ${styles.overview}`}>
           <TimelineIcons ticks={ticks} />
           <TimelineChart
             hours={hours}
