@@ -1,0 +1,74 @@
+.form {
+  width: 100%;
+}
+
+/* Input and button share one pill-shaped box; the list is positioned below it */
+.field {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-raised);
+}
+
+.field:focus-within {
+  border-color: var(--color-accent);
+}
+
+.input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-4);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-m);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* The surrounding box already shows the focus */
+.input:focus-visible {
+  outline: none;
+}
+
+.submit {
+  flex: 1 0 auto;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-5);
+  font-weight: 600;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-m);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+}
+
+.submit:disabled {
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+}
+
+.error {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-radius: var(--radius-m);
+}
+
+@media (min-width: 40rem) {
+  .submit {
+    flex-grow: 0;
+  }
+}

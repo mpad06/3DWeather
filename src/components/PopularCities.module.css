@@ -1,0 +1,57 @@
+.section {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-xl);
+  text-align: center;
+}
+
+/* Two columns on phones, four on wider screens (8 cities = full rows) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Fill the grid cell so all cards in a row have the same height */
+  height: 100%;
+  min-height: 4.25rem;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text);
+  text-decoration: none;
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.link:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.name {
+  font-weight: 600;
+}
+
+.state {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}

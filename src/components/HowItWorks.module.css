@@ -1,0 +1,47 @@
+.section {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-xl);
+  text-align: center;
+}
+
+/* One column on phones, three columns as soon as there is room */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  padding: var(--space-5);
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-l);
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: var(--space-3);
+  font-weight: 700;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.stepTitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-l);
+}
+
+.stepText {
+  color: var(--color-text-muted);
+}

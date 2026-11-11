@@ -1,0 +1,13 @@
+.attribution {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  text-wrap: balance;
+}
+
+.attribution a {
+  color: inherit;
+}
+
+.attribution a:hover {
+  color: var(--color-accent);
+}
