@@ -1,0 +1,55 @@
+/* Both rows position their items by percentage along the timeline. */
+.icons,
+.labels {
+  position: relative;
+}
+
+.icons {
+  height: 1.375rem;
+}
+
+.labels {
+  height: 1.25rem;
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  /* Centre the item on its position */
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Too many ticks for a phone: show only every second one */
+.minor {
+  display: none;
+}
+
+.now {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+/* Weekday at midnight, with a small separator line above it */
+.midnight {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.midnight::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  height: 0.5rem;
+  border-left: 1px dashed var(--color-text-muted);
+}
+
+@media (min-width: 48rem) {
+  .minor {
+    display: inline;
+  }
+}

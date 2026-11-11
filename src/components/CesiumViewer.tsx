@@ -4,7 +4,9 @@ import type { Viewer } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import { flyToLocation } from '../scene/camera'
 import { createViewer } from '../scene/createViewer'
+import { setSceneTime } from '../scene/sceneTime'
 import { isWebGlAvailable } from '../scene/webgl'
+import type { HourlyWeather } from '../types/weather'
 import { ErrorMessage } from './ErrorMessage'
 import styles from './CesiumViewer.module.css'
 
@@ -13,6 +15,8 @@ type CesiumViewerProps = {
   lon: number
   /** Ground height of the location in metres above sea level */
   elevation: number
+  /** Weather of the selected moment; drives the time of day in the scene */
+  weather: HourlyWeather
   /**
    * Called when a Cesium ion token is configured but cannot be used.
    * Must be a stable function (useCallback), because a new function would
@@ -28,7 +32,7 @@ type CesiumViewerProps = {
  * imperatively. This component is the bridge – React only provides an empty
  * <div>, and effects translate prop changes into Cesium calls.
  */
-export function CesiumViewer({ lat, lon, elevation, onIonError }: CesiumViewerProps) {
+export function CesiumViewer({ lat, lon, elevation, weather, onIonError }: CesiumViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   // The viewer lives in a ref, not in state: changing it must not re-render
   // the component, and React should never try to compare or copy it.
@@ -58,6 +62,14 @@ export function CesiumViewer({ lat, lon, elevation, onIonError }: CesiumViewerPr
     if (!viewer) return
     flyToLocation(viewer, lat, lon, elevation)
   }, [lat, lon, elevation])
+
+  // Follow the timeline: the selected moment becomes the time of the scene.
+  // The effect only runs when the timestamp really changed.
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer) return
+    setSceneTime(viewer, weather.timestamp)
+  }, [weather.timestamp])
 
   if (!webGlAvailable) {
     return (

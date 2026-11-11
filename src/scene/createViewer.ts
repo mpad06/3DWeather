@@ -117,6 +117,15 @@ export function createViewer(container: HTMLElement, onIonError: () => void): Vi
   const { scene } = viewer
   // Light the globe from the real sun position, so night is dark.
   scene.globe.enableLighting = true
+  // By default Cesium only darkens the night side when the camera is far out
+  // in space and shows the ground fully lit when it is close. Both distances
+  // are measured from the centre of the Earth (radius about 6,371 km), so
+  // these tiny values keep the day/night shading switched on at any height.
+  scene.globe.lightingFadeOutDistance = 0
+  scene.globe.lightingFadeInDistance = 1
+  // The blue haze that is drawn over the globe when seen from space uses the
+  // same two distances. We never look from that far, so switch it off.
+  scene.globe.showGroundAtmosphere = false
   // Hide clouds, rain and buildings that are behind a mountain.
   scene.globe.depthTestAgainstTerrain = true
   // Start above Germany instead of Cesium's default view of North America.

@@ -1,0 +1,107 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 var(--space-4);
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  text-align: left;
+}
+
+/* Small colour sample in front of each legend entry */
+.legendTemperature::before,
+.legendPrecipitation::before {
+  content: '';
+  display: inline-block;
+  width: 0.75rem;
+  margin-right: var(--space-2);
+  vertical-align: middle;
+}
+
+.legendTemperature::before {
+  height: 2px;
+  background: var(--color-temperature);
+}
+
+.legendPrecipitation::before {
+  height: 0.625rem;
+  background: var(--color-rain);
+  border-radius: 2px;
+}
+
+.plot {
+  position: relative;
+  height: 3.5rem;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Bars of the first and last hour reach half an hour beyond the edges */
+  overflow: visible;
+}
+
+.night {
+  fill: rgba(0, 0, 0, 0.32);
+}
+
+.bar {
+  fill: var(--color-rain);
+  opacity: 0.55;
+}
+
+.barSelected {
+  fill: var(--color-rain);
+}
+
+/*
+ * non-scaling-stroke keeps lines at their pixel width although the SVG is
+ * stretched horizontally.
+ */
+.line,
+.marker,
+.midnight {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.line {
+  stroke: var(--color-temperature);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.marker {
+  stroke: var(--color-text);
+  stroke-width: 1.5;
+}
+
+.midnight {
+  stroke: var(--color-border);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.dot {
+  position: absolute;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--color-temperature);
+  border: 2px solid var(--color-bg-raised);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+  .plot {
+    height: 4.5rem;
+  }
+}

@@ -13,24 +13,33 @@
 .scene {
   position: relative;
   min-height: 0;
+  /* Nothing of the overlay may reach into the panel below */
+  overflow: hidden;
 }
 
 /*
  * Layer above the canvas. It ignores the pointer so the globe below can
  * still be dragged; only the controls inside react to clicks and touches.
+ *
+ * Small screens: one column – top bar, HUD, notices.
+ * Wide screens (see media query): the notices move to the top right.
  */
 .overlay {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  /* The HUD row takes the remaining height and may shrink (minmax 0) */
+  grid-template-rows: auto minmax(0, auto) auto;
+  align-content: start;
   gap: var(--space-2);
   padding: var(--space-2);
   pointer-events: none;
 }
 
-.overlay > * {
+.topBar,
+.hud > *,
+.notices > * {
   pointer-events: auto;
 }
 
@@ -38,7 +47,20 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  max-width: 100%;
+  min-width: 0;
+}
+
+/* On a very low screen the HUD scrolls inside its area instead of overflowing */
+.hud {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.notices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
 }
 
 .back,
@@ -96,8 +118,26 @@
 
 @media (min-width: 48rem) {
   .overlay {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      'top notices'
+      'hud notices';
     gap: var(--space-3);
     padding: var(--space-4);
+  }
+
+  .topBar {
+    grid-area: top;
+  }
+
+  .hud {
+    grid-area: hud;
+  }
+
+  .notices {
+    grid-area: notices;
+    align-items: flex-end;
   }
 
   .panel {

@@ -1,0 +1,124 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.current {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keyboard hint: only useful (and only fits) on wide screens */
+.hint {
+  display: none;
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}
+
+.track {
+  /* Diameter of the slider thumb, shared by the slider and .aligned */
+  --thumb: 1.5rem;
+  --track-height: 0.375rem;
+}
+
+/*
+ * A range input moves the centre of its thumb from half a thumb width after
+ * the left edge to half a thumb width before the right edge. Chart, icons
+ * and labels get the same inset, so "hour 12" is at the same x everywhere.
+ */
+.aligned {
+  margin: 0 calc(var(--thumb) / 2);
+}
+
+/* ---- Slider: the native look is removed and rebuilt for all browsers ---- */
+
+.slider {
+  display: block;
+  width: 100%;
+  /* Tall touch area, although the visible track is thin */
+  height: var(--touch-target);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* The focus ring is drawn on the thumb instead of the whole input */
+.slider:focus-visible {
+  outline: none;
+}
+
+/* Track (Chrome, Edge, Safari): filled up to --progress */
+.slider::-webkit-slider-runnable-track {
+  height: var(--track-height);
+  background: linear-gradient(
+    to right,
+    var(--color-accent) var(--progress),
+    var(--color-surface) var(--progress)
+  );
+  border-radius: var(--radius-pill);
+}
+
+/* Track (Firefox) */
+.slider::-moz-range-track {
+  height: var(--track-height);
+  background: var(--color-surface);
+  border-radius: var(--radius-pill);
+}
+
+.slider::-moz-range-progress {
+  height: var(--track-height);
+  background: var(--color-accent);
+  border-radius: var(--radius-pill);
+}
+
+/* Thumb (Chrome, Edge, Safari) */
+.slider::-webkit-slider-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  /* Centre the thumb vertically on the thin track */
+  margin-top: calc((var(--track-height) - var(--thumb)) / 2);
+  background: var(--color-accent);
+  border: 3px solid var(--color-bg-raised);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-accent);
+  -webkit-appearance: none;
+}
+
+/* Thumb (Firefox) */
+.slider::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  background: var(--color-accent);
+  border: 3px solid var(--color-bg-raised);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--color-text);
+}
+
+.slider:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--color-text);
+}
+
+@media (min-width: 62rem) {
+  .hint {
+    display: block;
+  }
+}
